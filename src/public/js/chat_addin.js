@@ -3,7 +3,7 @@ var agentIQ = agentIQ || {};
 agentIQ.partials = {};
 agentIQ.partials.chat = '' +
       '<ul id="iq-message-id-message-list"></ul>' +
-      '<form id="iq-message-id-send-form" action="">' +
+      '<form ng-submit="sendMessage()" id="iq-message-id-send-form" action="">' +
         '<input id="iq-message-id-send-form-input" autocomplete="off" />' +
         '<button id="iq-message-id-submit-button" type="submit">Send</button>' +
       '</form>';
@@ -15,7 +15,7 @@ function addIQMessenger(iqMessengerURL) {
     agentIQ.containerElement = document.getElementById('iq-messenger-container');
 
     // Add in the chat partial
-    agentIQ.containerElement.innerHTML = agentIQ.partials.chat;
+    //agentIQ.containerElement.innerHTML = agentIQ.partials.chat;
 
     // Drop the session cookie so user re-connections are possible
     appendPrimer();

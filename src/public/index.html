@@ -11,18 +11,23 @@
   </head>
   <body ng-app="agentIQ" ng-controller="mainCtrl">
     <div id="iq-messenger-container">
-      <!--
-      <ul id="iq-message-id-message-list"></ul>
-      <form id="iq-message-id-send-form" action="">
-        <input id="iq-message-id-send-form-input" autocomplete="off" />
+      <ul id="iq-message-id-message-list" ng-repeat="message in messages" ng-switch on="messages.type"> 
+        <li ng-switch-when="outbound" class="iq-message-class-message outbound">{{message.message}}</li>
+        <li ng-switch-when="inbound" class="iq-message-class-message inbound">{{message.message}}</li> 
+      </ul>
+      <!--<ul id="iq-message-id-message-list">
+        <li ng-repeat="message in messages" class="iq-message-class-message">{{message.message}}</li>
+      </ul>-->
+      <form ng-submit="sendMessage()" id="iq-message-id-send-form" action="">
+        <input id="iq-message-id-send-form-input" autocomplete="off" ng-model="messagetext"/>
         <button id="iq-message-id-submit-button" type="submit">Send</button>
-      </form>-->
+      </form>
     </div>
 
     <script src="/js/vendor/jquery-1.12.0.min.js"></script>
     <script src="/js/vendor/angular.min.js"></script> 
     <script src="/js/angularapp.js"></script> 
-    <script src="/js/chat_addin.js"></script>
+    <!--<script src="/js/chat_addin.js"></script>-->
 
     <script>
       // Argument is the location of the sockets server that will handle the request
