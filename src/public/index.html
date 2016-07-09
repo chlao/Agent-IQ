@@ -11,7 +11,7 @@
   </head>
   <body ng-app="agentIQ" ng-controller="mainCtrl">
     <div id="iq-messenger-container">
-      <ul id="iq-message-id-message-list" ng-repeat="message in messages" ng-switch on="messages.type"> 
+      <ul id="iq-message-id-message-list" ng-repeat="message in messages" ng-switch on="message.type"> 
         <li ng-switch-when="outbound" class="iq-message-class-message outbound">{{message.message}}</li>
         <li ng-switch-when="inbound" class="iq-message-class-message inbound">{{message.message}}</li> 
       </ul>
@@ -20,6 +20,8 @@
         <button id="iq-message-id-submit-button" type="submit">Send</button>
       </form>
     </div>
+
+    <script src="https://iq-messenger-canary.herokuapp.com/socket.io/socket.io.js"></script> 
 
     <script type="text/javascript" src="/js/vendor/jquery-1.12.0.min.js"></script>
     <script type="text/javascript" src="/js/vendor/angular.min.js"></script> 
