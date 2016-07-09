@@ -12,8 +12,6 @@ agentIQ.formElement = document.getElementById(agentIQ.formID);
 agentIQ.formInputElement = document.getElementById(agentIQ.formInputID);
 agentIQ.messagesContainerElement = document.getElementById(agentIQ.messagesContainerID);
 
-agentIQ.messengerServiceClient = iqMessengerURL + '/socket.io/socket.io.js';
-
 $( document ).ready(function() {
 	appendPrimer();
 });
