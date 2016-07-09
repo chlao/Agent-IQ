@@ -34,12 +34,6 @@ angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 		if (!$scope.chatSocket){
 			$scope.chatSocket = socket.getSocket();  
 
-			agentIQ.formInputElement.value = '';
-
-			$scope.chatSocket.emit('send_to', $scope.messagetext);
-
-			$scope.messages.push({type: 'outbound', message: $scope.messagetext, media: ''});
-
 			$scope.chatSocket.on('receive_from', function(data) {
 	            data.type = 'inbound'
 	            $scope.messages.push(data);
@@ -51,12 +45,18 @@ angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 	            agentIQ.form_input.setAttribute('disabled', true)
 	        });
 		}
-	}
+	};
 	
 	$scope.sendMessage = function($event){
 		$event.preventDefault(); 
 
 		$scope.openSocketClient();
+
+		agentIQ.formInputElement.value = '';
+
+		$scope.chatSocket.emit('send_to', $scope.messagetext);
+
+		$scope.messages.push({type: 'outbound', message: $scope.messagetext, media: ''});
 	}; 
 }); 
 
@@ -67,16 +67,6 @@ angularapp.factory('socket', function(){
 		getSocket: function(){
 			chatSocket = new io(iqMessengerURL);
 			return chatSocket; 
-		}, 
-		send: function(messagetext){
-
 		}
-		/*
-		emit: function(eventName, data){
-			chatSocket.emit(eventName, data);
-		}, 
-		on: function(eventName, callback){
-			chatSocket.on(eventName, callback); 
-		}*/
 	}
 });
