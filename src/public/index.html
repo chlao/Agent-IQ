@@ -11,11 +11,11 @@
   </head>
   <body ng-app="agentIQ" ng-controller="mainCtrl">
     <div id="iq-messenger-container">
-      <ul id="iq-message-id-message-list" ng-repeat="message in messages" ng-switch on="message.type"> 
-        <li ng-switch-when="outbound" class="iq-message-class-message outbound">{{message.message}}</li>
-        <li ng-switch-when="inbound" class="iq-message-class-message inbound">{{message.message}}</li> 
+      <ul ng-cloak ng-repeat="message in messages" ng-switch on="message.type" id="iq-message-id-message-list"> 
+        <li ng-cloak ng-switch-when="outbound" class="iq-message-class-message outbound">{{message.message}}</li>
+        <li ng-cloak ng-switch-when="inbound" class="iq-message-class-message inbound">{{message.message}}</li> 
       </ul>
-      <form ng-submit="sendMessage()" id="iq-message-id-send-form" action="">
+      <form ng-submit="sendMessage($event)" id="iq-message-id-send-form" action="">
         <input ng-model="messagetext"id="iq-message-id-send-form-input" autocomplete="off"/>
         <button id="iq-message-id-submit-button" type="submit">Send</button>
       </form>

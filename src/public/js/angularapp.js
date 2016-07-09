@@ -15,9 +15,8 @@ agentIQ.messagesContainerElement = document.getElementById(agentIQ.messagesConta
 agentIQ.messengerServiceClient = iqMessengerURL + '/socket.io/socket.io.js';
 
 $( document ).ready(function() {
-    appendPrimer();
+	appendPrimer();
 });
-
 
 function appendPrimer() {
     // add in an image pixel to ensure the client gets a cookie before attempting to open a socket connection.
@@ -33,20 +32,17 @@ angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 
 	$scope.openSocketClient = function(){
 		if (!$scope.chatSocket){
-			$scope.chatSocket = socket.getSocket(); 
-
-			$scope.chatSocket.emit('send_to', agentIQ.formInputElement.value);
+			$scope.chatSocket = socket.getSocket();  
 
 			agentIQ.formInputElement.value = '';
 
-			//$scope.apply(); 
+			$scope.chatSocket.emit('send_to', $scope.messagetext);
 
-			console.log(document.body.innerHTML); 
+			$scope.messages.push({type: 'outbound', message: $scope.messagetext, media: ''});
 
 			$scope.chatSocket.on('receive_from', function(data) {
 	            data.type = 'inbound'
 	            $scope.messages.push(data);
-	            //$scope.apply(); 
 	        });	
 
 	        $scope.chatSocket.on('new_tab', function() {
@@ -57,8 +53,8 @@ angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 		}
 	}
 	
-	$scope.sendMessage = function(){
-		$scope.messages.push({type: 'outbound', message: $scope.messagetext, media: ''});
+	$scope.sendMessage = function($event){
+		$event.preventDefault(); 
 
 		$scope.openSocketClient();
 	}; 
@@ -66,31 +62,21 @@ angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 
 angularapp.factory('socket', function(){
 	var chatSocket; 
-	chatSocket = io.connect(); 
 
 	return{
 		getSocket: function(){
-			//chatSocket = io.connect(); 
 			chatSocket = new io(iqMessengerURL);
 			return chatSocket; 
-		},
+		}, 
+		send: function(messagetext){
+
+		}
+		/*
 		emit: function(eventName, data){
 			chatSocket.emit(eventName, data);
 		}, 
 		on: function(eventName, callback){
 			chatSocket.on(eventName, callback); 
-		}
+		}*/
 	}
 });
-
-/*
-angularapp.directive('chat-bubble', function(){
-	return {
-		template: "<li' class='iq-message-class-message'></li>", 
-		link: function(scope, elem, attr){
-			elem.innerHTML = scope.message; 
-		}, 
-		controller: 
-	}
-}); 
-*/

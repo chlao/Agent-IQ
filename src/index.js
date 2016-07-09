@@ -20,28 +20,20 @@ var io = require('socket.io')(http);
 // Add static server
 app.use(express.static(__dirname + '/public'));
 
-
 app.get('/', function(req, res){
-  //console.log(__dirname); 
   res.sendFile(__dirname + '/public/index.html');
 });
 
 /* Listen on the connection event for incoming sockets 
    Sockets allow communication between two different processes on the same 
    or different machines (way to talk to other computers) 
-*
+
 io.on('connection', function(socket){
-  console.log('a user connected');
-
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
+  socket.on('send_to', function(msg){
+    io.emit('send_to', msg); 
   });
+});*/
 
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg); 
-  });
-});
-*/
 http.listen(process.env.PORT || 3000, function(){
   console.log('listening on *:3000');
 });
