@@ -32,14 +32,13 @@ function loadScript(url, callback) {
     var script = document.createElement('script');
     script.setAttribute("type","text/javascript");
     script.setAttribute("src", url);
-    document.body.appendChild(script);
     script.onload = function(){
         return callback();
     }
 }
 
 function loadClient() {
-    agentIQ.formInputElement.onfocus = openSocketClient;
+    //agentIQ.formInputElement.onfocus = openSocketClient;
 }
 
 function openSocketClient() {
@@ -58,11 +57,7 @@ function openSocketClient() {
             return false;
         });
 
-        agentIQ.chatSocket.on('receive_from', function(data) {
-            data.type = 'inbound'
-            agentIQ.messages.push(data);
-            agentIQ.renderMessages();
-        });
+        
 
         agentIQ.chatSocket.on('new_tab', function() {
             agentIQ.form_input.value = 'New tab opened, we only support one tab at a time.  Please refresh if you need to use this tab.';
@@ -88,31 +83,47 @@ agentIQ.renderMessages = function() {
 }
 
 
-
-
-
-
-
 var angularapp = angular.module('agentIQ', []);
 
 angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 	$scope.messages = []; 
 
+	$scope.openSocketClient = function(){
+		if (!$scope.chatSocket){
+			//$scope.chatSocket = socket.getSocket(); 
 
-	if (!$scope.chatSocket){
-		$scope.chatSocket = socket.getSocket(); 
+			$scope.chatSocket.emit('send_to', agentIQ.formInputElement.value);
+
+			agentIQ.formInputElement.value = '';
+
+			$scope.chatSocket.on('receive_from', function(data) {
+	            data.type = 'inbound'
+	            agentIQ.messages.push(data);
+	            agentIQ.renderMessages();
+	        });	
+
+	        $scope.chatSocket.on('new_tab', function() {
+            	agentIQ.form_input.value = 'New tab opened, we only support one tab at a time.  Please refresh if you need to use this tab.';
+	            agentIQ.form.className = 'iq-message-class inactive';
+	            agentIQ.form_input.setAttribute('disabled', true)
+	        });
+		}
 	}
-
+	
 	$scope.sendMessage = function(){
 		$scope.messages.push({type: 'outbound', message: $scope.messagetext, media: ''});
+
+		$scope.openSocketClient();
 	}; 
 }); 
 
 angularapp.factory('socket', function(){
 	var chatSocket; 
+	chatSocket = io.connect(); 
 
 	return{
 		getSocket: function(){
+			//chatSocket = io.connect(); 
 			chatSocket = new io(iqMessengerURL);
 			return chatSocket; 
 		},

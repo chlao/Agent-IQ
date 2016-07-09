@@ -29,7 +29,7 @@ app.get('/', function(req, res){
 /* Listen on the connection event for incoming sockets 
    Sockets allow communication between two different processes on the same 
    or different machines (way to talk to other computers) 
-*/   
+*
 io.on('connection', function(socket){
   console.log('a user connected');
 
@@ -41,7 +41,7 @@ io.on('connection', function(socket){
     io.emit('chat message', msg); 
   });
 });
-
+*/
 http.listen(process.env.PORT || 3000, function(){
   console.log('listening on *:3000');
 });

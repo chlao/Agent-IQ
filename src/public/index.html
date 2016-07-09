@@ -15,22 +15,15 @@
         <li ng-switch-when="outbound" class="iq-message-class-message outbound">{{message.message}}</li>
         <li ng-switch-when="inbound" class="iq-message-class-message inbound">{{message.message}}</li> 
       </ul>
-      <!--<ul id="iq-message-id-message-list">
-        <li ng-repeat="message in messages" class="iq-message-class-message">{{message.message}}</li>
-      </ul>-->
       <form ng-submit="sendMessage()" id="iq-message-id-send-form" action="">
-        <input id="iq-message-id-send-form-input" autocomplete="off" ng-model="messagetext"/>
+        <input ng-model="messagetext"id="iq-message-id-send-form-input" autocomplete="off"/>
         <button id="iq-message-id-submit-button" type="submit">Send</button>
       </form>
     </div>
 
-  <script scr="https://iq-messenger-canary.herokuapp.com/socket.io/socket.io.js"></script>
-  
-    <script src="/js/vendor/jquery-1.12.0.min.js"></script>
-    <script src="/js/vendor/angular.min.js"></script> 
-    <script src="/js/angularapp.js"></script> 
-    <!--<script src="/js/chat_addin.js"></script>-->
+    <script type="text/javascript" src="/js/vendor/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="/js/vendor/angular.min.js"></script> 
+    <script type="text/javascript" src="/js/angularapp.js"></script> 
 
-    
   </body>
 </html>
