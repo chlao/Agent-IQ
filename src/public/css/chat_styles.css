@@ -1,6 +1,7 @@
 #iq-messenger-container {
     width: 75%; 
     margin: 0 auto;
+    min-width: 300px; 
 }
 
 #iq-chatbubbles-container{
@@ -16,11 +17,22 @@
 }
 
 #iq-message-id-submit-button{
-    display: none;
+    background: url('../img/send.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border:none;
+    padding: 3px;
+    font-size:1.9em;
+    text-transform: uppercase;
+    width: 7.5%; 
+    float: right; 
+    display: inline; 
+    color: white; 
 }
 
 #iq-message-id-send-form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 75%; margin: 10px; }
-#iq-message-id-send-form input { border: 0; padding: 10px; width: 100%; }
+#iq-message-id-send-form input { border: 0; padding: 10px; width: 92.5%; }
 
 .iq-message-class-message.inbound{
     width: 72%;
