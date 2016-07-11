@@ -34,20 +34,23 @@ angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 			$scope.chatSocket = socket.getSocket($scope.iqMessengerURL);  
 
 			$scope.chatSocket.on('receive_from', function(data) {
-	            data.type = 'inbound'
+	            data.type = 'inbound';
 	            $scope.messages.push(data);
 	            $scope.$apply(); 
 	        });	
 
-	        $scope.chatSocket.on('new_tab', function() {
-            	agentIQ.form_input.value = 'New tab opened, we only support one tab at a time.  Please refresh if you need to use this tab.';
-	            agentIQ.form.className = 'iq-message-class inactive';
-	            agentIQ.form_input.setAttribute('disabled', true); 
-	        });
-
-	        $scope.chatSocket.on('receive_from_img', function(){
-
+	      	$scope.chatSocket.on('receive_from_img', function(data){
+	        	data.type = 'inbound'; 
+	        	data.media = 'img'; 
+	            $scope.messages.push(data);
+	            $scope.$apply(); 
 	        }); 
+
+	        $scope.chatSocket.on('new_tab', function() {
+            	$scope.formInputElement.value = 'New tab opened, we only support one tab at a time.  Please refresh if you need to use this tab.';
+	            $scope.formElement.className = 'iq-message-class inactive';
+	            $scope.formInputElement.setAttribute('disabled', true); 
+	        });
 		}
 	};
 	
@@ -63,21 +66,15 @@ angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 		var file = element.files[0]; 
 
 		var reader = new FileReader();
-
 		reader.onload = readSuccess; 
 
 		function readSuccess(event){
+			$scope.chatSocket.emit('send_to_img', event.target.result); 
 			$scope.messages.push({type: 'outbound', message: event.target.result, media: 'img'});
-			//console.log(event.target.result); 
 			$scope.$apply(); 
 		}
 
 		reader.readAsDataURL(file);  
-
-		// Display image 
-		// 
-
-		$scope.chatSocket.emit('send_to_img', file); 
 	}
 }); 
 
