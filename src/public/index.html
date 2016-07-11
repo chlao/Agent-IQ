@@ -17,9 +17,13 @@
           <li ng-cloak ng-switch-when="inbound" ng-bind="message.message" class="iq-message-class-message inbound"></li> 
         </ul>
       </div> 
-      <form ng-submit="sendMessage($event)" id="iq-message-id-send-form" action="">
-        <input ng-model="messagetext"id="iq-message-id-send-form-input" autocomplete="off" placeholder="Type a message"/>
+      <form ng-submit="sendMessage($event)" id="iq-message-id-send-form" action="" style="overflow: hidden;">
         <button id="iq-message-id-submit-button" type="submit"> &nbsp; </button>
+        <div id="iq-message-id-upload-container"> 
+          <input type="file" id="iq-message-id-upload"/>
+          <img src="/img/picture.png" id="iq-message-id-upload-button">
+        </div> 
+        <span id="iq-message-id-send-form-input-container"><input ng-model="messagetext" id="iq-message-id-send-form-input" autocomplete="off" placeholder="Type a message"/></span> 
       </form>
     </div>
 

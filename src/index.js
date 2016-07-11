@@ -24,16 +24,6 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/index.html');
 });
 
-/* Listen on the connection event for incoming sockets 
-   Sockets allow communication between two different processes on the same 
-   or different machines (way to talk to other computers) 
-
-io.on('connection', function(socket){
-  socket.on('send_to', function(msg){
-    io.emit('send_to', msg); 
-  });
-});*/
-
 http.listen(process.env.PORT || 3000, function(){
   console.log('listening on *:3000');
 });
