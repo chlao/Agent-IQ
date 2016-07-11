@@ -1,6 +1,6 @@
 var agentIQ = agentIQ || {};
 
-var iqMessengerURL = 'https://iq-messenger-canary.herokuapp.com'; 
+agentIQ.iqMessengerURL = 'https://iq-messenger-canary.herokuapp.com'; 
 
 agentIQ.containerElement = document.getElementById('iq-messenger-container');
 
@@ -12,21 +12,21 @@ agentIQ.formElement = document.getElementById(agentIQ.formID);
 agentIQ.formInputElement = document.getElementById(agentIQ.formInputID);
 agentIQ.messagesContainerElement = document.getElementById(agentIQ.messagesContainerID);
 
-$( document ).ready(function() {
-	appendPrimer();
-});
-
-function appendPrimer() {
-    // add in an image pixel to ensure the client gets a cookie before attempting to open a socket connection.
-    var img = document.createElement('img');
-    img.src = iqMessengerURL + '/primer.png';
-    agentIQ.containerElement.appendChild(img);
-}
-
 var angularapp = angular.module('agentIQ', []);
 
 angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 	$scope.messages = []; 
+
+	angular.element(document).ready(function(){
+		appendPrimer();
+
+		function appendPrimer() {
+		    // add in an image pixel to ensure the client gets a cookie before attempting to open a socket connection.
+		    var img = document.createElement('img');
+		    img.src = agentIQ.iqMessengerURL + '/primer.png';
+		    agentIQ.containerElement.appendChild(img);
+		}
+	}); 
 
 	$scope.openSocketClient = function(){
 		if (!$scope.chatSocket){
@@ -35,6 +35,7 @@ angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 			$scope.chatSocket.on('receive_from', function(data) {
 	            data.type = 'inbound'
 	            $scope.messages.push(data);
+	            $scope.$apply(); 
 	        });	
 
 	        $scope.chatSocket.on('new_tab', function() {
@@ -51,9 +52,7 @@ angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 		$scope.openSocketClient();
 
 		agentIQ.formInputElement.value = '';
-
 		$scope.chatSocket.emit('send_to', $scope.messagetext);
-
 		$scope.messages.push({type: 'outbound', message: $scope.messagetext, media: ''});
 	}; 
 }); 
@@ -63,7 +62,7 @@ angularapp.factory('socket', function(){
 
 	return{
 		getSocket: function(){
-			chatSocket = new io(iqMessengerURL);
+			chatSocket = new io(agentIQ.iqMessengerURL);
 			return chatSocket; 
 		}
 	}

@@ -9,14 +9,16 @@
     
     <link rel="stylesheet" href="/css/chat_styles.css">
   </head>
-  <body ng-app="agentIQ" ng-controller="mainCtrl">
-    <div id="iq-messenger-container">
-      <ul ng-repeat="message in messages" ng-switch on="message.type" id="iq-message-id-message-list"> 
-        <li ng-cloak ng-switch-when="outbound" ng-bind="message.message" class="iq-message-class-message outbound"></li>
-        <li ng-cloak ng-switch-when="inbound" ng-bind="message.message" class="iq-message-class-message inbound"></li> 
-      </ul>
+  <body>
+    <div ng-app="agentIQ" ng-controller="mainCtrl" id="iq-messenger-container">
+      <div id="iq-chatbubbles-container"> 
+        <ul ng-repeat="message in messages" ng-switch on="message.type" id="iq-message-id-message-list"> 
+          <li ng-cloak ng-switch-when="outbound" ng-bind="message.message" class="iq-message-class-message outbound"></li>
+          <li ng-cloak ng-switch-when="inbound" ng-bind="message.message" class="iq-message-class-message inbound"></li> 
+        </ul>
+      </div> 
       <form ng-submit="sendMessage($event)" id="iq-message-id-send-form" action="">
-        <input ng-model="messagetext"id="iq-message-id-send-form-input" autocomplete="off"/>
+        <input ng-model="messagetext"id="iq-message-id-send-form-input" autocomplete="off" placeholder="Type a message"/>
         <button id="iq-message-id-submit-button" type="submit">Send</button>
       </form>
     </div>
