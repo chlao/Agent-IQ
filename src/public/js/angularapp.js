@@ -39,13 +39,6 @@ angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 	            $scope.$apply(); 
 	        });	
 
-	      	$scope.chatSocket.on('receive_from_img', function(data){
-	        	data.type = 'inbound'; 
-	        	data.media = 'img'; 
-	            $scope.messages.push(data);
-	            $scope.$apply(); 
-	        }); 
-
 	        $scope.chatSocket.on('new_tab', function() {
             	$scope.formInputElement.value = 'New tab opened, we only support one tab at a time.  Please refresh if you need to use this tab.';
 	            $scope.formElement.className = 'iq-message-class inactive';
@@ -69,8 +62,8 @@ angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 		reader.onload = readSuccess; 
 
 		function readSuccess(event){
-			$scope.chatSocket.emit('send_to_img', event.target.result); 
-			$scope.messages.push({type: 'outbound', message: event.target.result, media: 'img'});
+			$scope.chatSocket.emit('send_to', event.target.result); 
+			$scope.messages.push({type: 'outbound', message: '', media: event.target.result});
 			$scope.$apply(); 
 		}
 

@@ -83,7 +83,7 @@
 }
 
 .iq-message-class-content{
-    width: inherit;
+    max-width: 100%;
 }
 
 /* 

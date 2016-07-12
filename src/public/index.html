@@ -14,12 +14,12 @@
       <div id="iq-chatbubbles-container"> 
         <ul ng-repeat="message in messages" ng-switch on="message.type" id="iq-message-id-message-list"> 
           <li ng-cloak ng-switch-when="outbound" class="iq-message-class-message outbound">
-            <p ng-if="message.media != 'img'" ng-bind="message.message" class="iq-message-class-content"></p> 
-            <img ng-if="message.media == 'img'" alt="" ng-src="{{message.message}}" class="iq-message-class-content"/>
+            <p ng-if="!message.media" ng-bind="message.message" class="iq-message-class-content"></p> 
+            <img ng-if="message.media" alt="" ng-src="{{message.media}}" class="iq-message-class-content"/>
           </li>
           <li ng-cloak ng-switch-when="inbound" ng-bind="message.message" class="iq-message-class-message inbound">
-            <p ng-if="message.media != 'img'" ng-bind="message.message" class="iq-message-class-content"></p> 
-            <img ng-if="message.media == 'img'" alt="" ng-src="{{message.message}}" class="iq-message-class-content"/>
+            <p ng-if="!message.media" ng-bind="message.message" class="iq-message-class-content"></p> 
+            <img ng-if="message.media" alt="" ng-src="{{message.media}}" class="iq-message-class-content"/>
           </li> 
         </ul>
       </div> 
