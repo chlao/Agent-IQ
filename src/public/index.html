@@ -17,7 +17,7 @@
             <p ng-if="!message.media" ng-bind="message.message" class="iq-message-class-content"></p> 
             <img ng-if="message.media" alt="" ng-src="{{message.media}}" class="iq-message-class-content"/>
           </li>
-          <li ng-cloak ng-switch-when="inbound" ng-bind="message.message" class="iq-message-class-message inbound">
+          <li ng-cloak ng-switch-when="inbound" class="iq-message-class-message inbound">
             <p ng-if="!message.media" ng-bind="message.message" class="iq-message-class-content"></p> 
             <img ng-if="message.media" alt="" ng-src="{{message.media}}" class="iq-message-class-content"/>
           </li> 
