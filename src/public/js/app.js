@@ -33,17 +33,7 @@ angularapp.controller('mainCtrl', function($scope, $window, $http, socket){
 		if (!$scope.chatSocket){
 			$scope.chatSocket = socket.getSocket($scope.iqMessengerURL);  
 
-			$scope.chatSocket.on('receive_from', function(data) {
-	            data.type = 'inbound';
-	            $scope.messages.push(data);
-	            $scope.$apply(); 
-	        });	
-
-	        $scope.chatSocket.on('new_tab', function() {
-            	$scope.formInputElement.value = 'New tab opened, we only support one tab at a time.  Please refresh if you need to use this tab.';
-	            $scope.formElement.className = 'iq-message-class inactive';
-	            $scope.formInputElement.setAttribute('disabled', true); 
-	        });
+			socket.setListeners($scope);
 		}
 	};
 	
@@ -78,6 +68,19 @@ angularapp.factory('socket', function(){
 		getSocket: function(iqMessengerURL){
 			chatSocket = new io(iqMessengerURL);
 			return chatSocket; 
+		}, 
+		setListeners: function(scope){
+			scope.chatSocket.on('receive_from', function(data) {
+	            data.type = 'inbound';
+	            scope.messages.push(data);
+	            scope.$apply(); 
+	        });	
+
+	        scope.chatSocket.on('new_tab', function() {
+            	scope.formInputElement.value = 'New tab opened, we only support one tab at a time.  Please refresh if you need to use this tab.';
+	            scope.formElement.className = 'iq-message-class inactive';
+	            scope.formInputElement.setAttribute('disabled', true); 
+	        });
 		}
 	}
 });

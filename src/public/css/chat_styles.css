@@ -86,6 +86,11 @@
     max-width: 100%;
 }
 
+.iq-message-class-text{
+    -ms-word-break: break-all;
+    word-break: break-all;
+}
+
 /* 
   Allow angular.js to be loaded in body, hiding cloaked elements until 
   templates compile.  The !important is important given that there may be 

@@ -14,11 +14,11 @@
       <div id="iq-chatbubbles-container"> 
         <ul ng-repeat="message in messages" ng-switch on="message.type" id="iq-message-id-message-list"> 
           <li ng-cloak ng-switch-when="outbound" class="iq-message-class-message outbound">
-            <p ng-if="!message.media" ng-bind="message.message" class="iq-message-class-content"></p> 
+            <p ng-if="!message.media" ng-bind="message.message" class="iq-message-class-content .iq-message-class-text"></p> 
             <img ng-if="message.media" alt="" ng-src="{{message.media}}" class="iq-message-class-content"/>
           </li>
           <li ng-cloak ng-switch-when="inbound" class="iq-message-class-message inbound">
-            <p ng-if="!message.media" ng-bind="message.message" class="iq-message-class-content"></p> 
+            <p ng-if="!message.media" ng-bind="message.message" class="iq-message-class-content .iq-message-class-text"></p> 
             <img ng-if="message.media" alt="" ng-src="{{message.media}}" class="iq-message-class-content"/>
           </li> 
         </ul>
@@ -26,7 +26,7 @@
       <form ng-submit="sendMessage($event)" id="iq-message-id-send-form" action="" style="overflow: hidden;">
         <button id="iq-message-id-submit-button" type="submit"> &nbsp; </button>
         <div id="iq-message-id-upload-container"> 
-          <input ng-model="image" onchange="angular.element(this).scope().processImg(this)" type="file" id="iq-message-id-upload" accept="image/gif, image/jpeg, image/png"/>
+          <input ng-model="image" onchange="angular.element(this).scope().processImg(this)" type="file" id="iq-message-id-upload" accept="image/"/>
           <img src="/img/picture_gray.png" id="iq-message-id-upload-button">
         </div> 
         <span id="iq-message-id-send-form-input-container">
@@ -39,7 +39,7 @@
 
     <script type="text/javascript" src="/js/vendor/jquery-1.12.0.min.js"></script>
     <script type="text/javascript" src="/js/vendor/angular.min.js"></script> 
-    <script type="text/javascript" src="/js/angularapp.js"></script> 
+    <script type="text/javascript" src="/js/app.js"></script> 
 
   </body>
 </html>
